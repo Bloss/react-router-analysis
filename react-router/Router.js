@@ -28,8 +28,9 @@ class Router extends React.Component {
         ...this.context.router,
         history: this.props.history,
         route: {
+          // history.location, 当点击 Link 或者 push 路由的时候, location 会变化, Route 就会更新
           location: this.props.history.location,
-          match: this.state.match // parent, 根路由
+          match: this.state.match // parent, 根路由 /
         }
       }
     };
@@ -59,7 +60,8 @@ class Router extends React.Component {
     // Do this here so we can setState when a <Redirect> changes the
     // location in componentWillMount. This happens e.g. when doing
     // server rendering using a <StaticRouter>.
-    // 注册 history 的监听函数, 回调执行 setState({ match })
+
+    // 注册 history 的监听函数, 回调执行 setState({ match }), 对应的 childContext 也会更新
     this.unlisten = history.listen(() => {
       this.setState({
         match: this.computeMatch(history.location.pathname)
